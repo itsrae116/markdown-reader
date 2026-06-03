@@ -1,0 +1,35 @@
+{
+  "name": "markdown-reader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5199",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5199",
+    "typecheck": "vue-tsc --noEmit",
+    "test:scaffold": "node tests/scaffold.test.mjs",
+    "test:t002": "node tests/t002-contract.test.mjs",
+    "test:t003": "node tests/t003-start-page.test.mjs",
+    "test:t004": "node tests/t004-workspace.test.mjs",
+    "test:t005": "node tests/t005-annotations.test.mjs",
+    "test:t006": "node tests/t006-search.test.mjs",
+    "test:t007": "node tests/t007-settings.test.mjs",
+    "test:t008": "node tests/t008-polish.test.mjs",
+    "test:t009": "node tests/t009-render-enhancements.test.mjs"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.5",
+    "markdown-it": "^14.1.0",
+    "pinia": "^2.3.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vue-tsc": "^2.2.10"
+  }
+}
