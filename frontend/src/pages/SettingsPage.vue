@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
+import AppIcon from '@/components/AppIcon.vue'
 import { useAppStore } from '@/stores/appStore'
 import { clearLocalData } from '@/services/localStorageService'
 import { resetPreferences, savePreferences } from '@/services/preferencesService'
@@ -53,18 +54,13 @@ async function closeSettings() {
 <template>
   <main class="settings-page">
     <nav class="app-rail" aria-label="主导航">
-      <RouterLink class="rail-logo rail-link" to="/" aria-label="返回启动页">M</RouterLink>
-      <RouterLink class="rail-link" to="/workspace" title="阅读工作台">▤</RouterLink>
-      <RouterLink class="rail-link" to="/search" title="搜索">⌕</RouterLink>
-      <button class="rail-button" type="button" title="历史">↺</button>
-      <RouterLink class="rail-link rail-bottom router-link-active" to="/settings" title="设置">⚙</RouterLink>
+      <RouterLink class="rail-logo rail-link" to="/" aria-label="返回启动页"><AppIcon name="home" /></RouterLink>
+      <RouterLink class="rail-link" to="/workspace" title="阅读工作台"><AppIcon name="library" /></RouterLink>
+      <RouterLink class="rail-link" to="/search" title="搜索"><AppIcon name="search" /></RouterLink>
+      <RouterLink class="rail-link rail-bottom router-link-active" to="/settings" title="设置"><AppIcon name="settings" /></RouterLink>
     </nav>
     <header class="app-topbar">
-      <h1>Markdown 阅读器</h1>
-      <nav aria-label="工作台工具">
-        <RouterLink class="icon-button" to="/search" title="搜索">⌕</RouterLink>
-        <RouterLink class="icon-button" to="/workspace" title="阅读工作台">▣</RouterLink>
-      </nav>
+      <h1>Markdown Reader</h1>
     </header>
     <section class="settings-preview" aria-hidden="true">
       <article>
@@ -76,11 +72,11 @@ async function closeSettings() {
       </article>
     </section>
     <div class="settings-overlay" aria-hidden="true"></div>
-    <section class="settings-drawer" aria-label="本地偏好设置">
+    <section class="settings-drawer" aria-label="阅读设置">
       <header>
         <div>
-          <h1>本地偏好</h1>
-          <p>仅保存在当前浏览器</p>
+          <h1>阅读设置</h1>
+          <p>按你的阅读习惯调整</p>
         </div>
         <RouterLink to="/workspace" aria-label="关闭">×</RouterLink>
       </header>
@@ -126,7 +122,7 @@ async function closeSettings() {
       <section class="setting-group">
         <h2>面板显示</h2>
         <label class="switch-row">
-          <span>显示左侧目录</span>
+          <span>显示目录栏</span>
           <input
             type="checkbox"
             :checked="store.preferences.show_left_sidebar"
@@ -134,7 +130,7 @@ async function closeSettings() {
           />
         </label>
         <label class="switch-row">
-          <span>显示右侧批注</span>
+          <span>显示批注栏</span>
           <input
             type="checkbox"
             :checked="store.preferences.show_right_panel"
@@ -144,10 +140,10 @@ async function closeSettings() {
       </section>
 
       <section class="setting-group danger-zone">
-        <h2>本地数据</h2>
-        <p>阅读位置、高亮、划线和批注会保存在当前浏览器本地，原始 Markdown 文件不会被修改。</p>
+        <h2>本地记录</h2>
+        <p>阅读位置、高亮、划线和批注会留在当前浏览器，原始文件不会被修改。</p>
         <button type="button" class="danger" @click="confirmClearLocalData">
-          {{ confirmClear ? '二次确认：清除本地数据' : '清除历史和批注' }}
+          {{ confirmClear ? '再次点击清除记录' : '清除阅读记录和批注' }}
         </button>
       </section>
 

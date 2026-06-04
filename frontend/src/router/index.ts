@@ -14,4 +14,17 @@ const router = createRouter({
   ]
 })
 
+let isInitialNavigation = true
+
+router.beforeEach((to) => {
+  if (!isInitialNavigation) return true
+  isInitialNavigation = false
+
+  if (to.name !== 'start') {
+    return { name: 'start', replace: true }
+  }
+
+  return true
+})
+
 export default router

@@ -112,14 +112,14 @@ function createHistoryItem(document: DocumentItem): HistoryItem {
       @drop.prevent="handleDrop"
     >
       <header class="start-header">
-        <h1>Markdown 阅读器</h1>
-        <p>打开本地文档，安静阅读，随手批注</p>
+        <h1>Markdown Reader</h1>
+        <p>打开文件夹，开始阅读整个知识库</p>
       </header>
       <div class="drop-icon" aria-hidden="true">⇧</div>
-      <p class="drop-label">拖入 Markdown 文件</p>
+      <p class="drop-label">拖入 Markdown 文档</p>
       <div class="actions">
-        <button type="button" @click="folderInput?.click()">打开本地文件夹</button>
-        <button type="button" class="secondary" @click="fileInput?.click()">选择 Markdown 文件</button>
+        <button type="button" @click="folderInput?.click()">打开知识文件夹</button>
+        <button type="button" class="secondary" @click="fileInput?.click()">选择 Markdown 文档</button>
       </div>
       <input
         ref="folderInput"
@@ -155,7 +155,7 @@ function createHistoryItem(document: DocumentItem): HistoryItem {
         <small>{{ record.path }}</small>
       </button>
     </section>
-    <p class="privacy">内容仅在本机浏览器读取和保存。阅读位置、高亮、划线和批注会保存在当前浏览器本地，原始 Markdown 文件不会被修改。</p>
+    <p class="privacy">内容只在本机读取。阅读位置、高亮、划线和批注会留在当前浏览器，原始文件不会被修改。</p>
   </main>
 </template>
 

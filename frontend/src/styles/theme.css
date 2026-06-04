@@ -15,6 +15,14 @@
   --color-primary-strong: #2563eb;
   --color-secondary: #006a63;
   --color-ink: #18181b;
+  --color-action: #2f3440;
+  --color-action-soft: #596070;
+  --color-action-active: #004ac6;
+  --color-action-bg: color-mix(in srgb, var(--color-primary-strong) 10%, transparent);
+  --color-action-hover-bg: var(--color-surface-muted);
+  --color-scrollbar-track: color-mix(in srgb, var(--color-surface-muted) 52%, transparent);
+  --color-scrollbar-thumb: color-mix(in srgb, var(--color-text-soft) 42%, transparent);
+  --color-scrollbar-thumb-hover: color-mix(in srgb, var(--color-text-soft) 62%, transparent);
   --color-highlight: #ffe08a;
   --color-underline: #d97706;
   --rail-width: 72px;
@@ -32,6 +40,30 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
+}
+
+* {
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border: 3px solid var(--color-scrollbar-track);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-thumb-hover);
 }
 
 .theme-light {
@@ -60,15 +92,25 @@ body {
 
 .theme-dark {
   --color-background: #15171c;
-  --color-surface: #20242c;
-  --color-surface-muted: #2a303a;
-  --color-surface-rail: #20242c;
-  --color-surface-panel: #20242c;
+  --color-surface: #1f242d;
+  --color-surface-muted: #2b3340;
+  --color-surface-rail: #1b2028;
+  --color-surface-panel: #202631;
   --color-text: #f4f1ea;
-  --color-text-soft: #b8bfcb;
-  --color-border: #3d4552;
-  --color-outline: #46505f;
-  --color-ink: #0f1115;
+  --color-text-soft: #c5ccd7;
+  --color-border: #414b5b;
+  --color-outline: #566175;
+  --color-primary: #8ab4ff;
+  --color-primary-strong: #3b82f6;
+  --color-ink: #f5f7fb;
+  --color-action: #d8e1ef;
+  --color-action-soft: #aeb8c8;
+  --color-action-active: #8ab4ff;
+  --color-action-bg: color-mix(in srgb, var(--color-primary-strong) 24%, transparent);
+  --color-action-hover-bg: color-mix(in srgb, var(--color-primary-strong) 16%, #2b3340 84%);
+  --color-scrollbar-track: #1a1f2b;
+  --color-scrollbar-thumb: #3b4153;
+  --color-scrollbar-thumb-hover: #51586b;
 }
 
 button,
@@ -94,38 +136,39 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
-  padding: 18px 0;
+  gap: 22px;
+  padding: 16px 0;
   background: var(--color-surface-rail);
   border-right: 1px solid var(--color-outline);
 }
 
 .rail-logo {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--color-ink);
+  color: var(--color-action);
 }
 
 .rail-link,
 .rail-button {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
-  color: color-mix(in srgb, var(--color-ink) 68%, transparent);
+  color: var(--color-action-soft);
   text-decoration: none;
   background: transparent;
   border-radius: 8px;
-  font-size: 26px;
-  font-weight: 700;
+}
+
+.rail-link .app-icon,
+.rail-button .app-icon {
+  width: 22px;
+  height: 22px;
 }
 
 .rail-link:hover,
 .rail-button:hover,
 .rail-link.router-link-active {
-  color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary-strong) 10%, transparent);
+  color: var(--color-action-active);
+  background: var(--color-action-hover-bg);
 }
 
 .rail-bottom {
@@ -157,20 +200,33 @@ a {
 }
 
 .icon-button {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   display: inline-grid;
   place-items: center;
-  color: var(--color-ink);
+  color: var(--color-action);
   text-decoration: none;
   background: transparent;
   border-radius: 8px;
-  font-size: 28px;
-  font-weight: 700;
+}
+
+.icon-button .app-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .icon-button:hover {
-  background: var(--color-surface-muted);
+  color: var(--color-action-active);
+  background: var(--color-action-hover-bg);
+}
+
+.app-icon {
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .sr-only {

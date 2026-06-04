@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import AppIcon from '@/components/AppIcon.vue'
 import { useAppStore } from '@/stores/appStore'
 import { searchCurrentDocument, searchDocuments } from '@/services/searchService'
 import type { DocumentItem, SearchResult, SearchScope } from '@/types/document'
@@ -56,17 +57,16 @@ async function handleResultClick(result: SearchResult) {
 <template>
   <main class="search-page">
     <nav class="app-rail" aria-label="主导航">
-      <RouterLink class="rail-logo rail-link" to="/" aria-label="返回启动页">M</RouterLink>
-      <RouterLink class="rail-link" to="/workspace" title="阅读工作台">▤</RouterLink>
-      <RouterLink class="rail-link router-link-active" to="/search" title="搜索">⌕</RouterLink>
-      <button class="rail-button" type="button" title="历史">↺</button>
-      <RouterLink class="rail-link rail-bottom" to="/settings" title="设置">⚙</RouterLink>
+      <RouterLink class="rail-logo rail-link" to="/" aria-label="返回启动页"><AppIcon name="home" /></RouterLink>
+      <RouterLink class="rail-link" to="/workspace" title="阅读工作台"><AppIcon name="library" /></RouterLink>
+      <RouterLink class="rail-link router-link-active" to="/search" title="搜索"><AppIcon name="search" /></RouterLink>
+      <RouterLink class="rail-link rail-bottom" to="/settings" title="设置"><AppIcon name="settings" /></RouterLink>
     </nav>
     <RouterLink class="search-close" to="/workspace" aria-label="关闭搜索">×</RouterLink>
-    <section class="search-drawer" aria-label="搜索结果视图">
+    <section class="search-drawer" aria-label="搜索">
       <header>
-        <p>不离开阅读工作台</p>
-        <h1>搜索文档</h1>
+        <p>在打开的文档中定位内容</p>
+        <h1>搜索</h1>
       </header>
 
       <div class="search-controls">
@@ -106,13 +106,13 @@ async function handleResultClick(result: SearchResult) {
       </section>
 
       <section v-if="hasSearched && groupedResults.length === 0" class="empty-state">
-        <h2>无匹配结果</h2>
-        <p>换个关键词，或切换当前文档 / 文档库范围。</p>
+        <h2>没有找到相关内容</h2>
+        <p>换个关键词，或切换搜索范围。</p>
       </section>
 
       <section class="library-hint">
-        <h2>文档库目录</h2>
-        <p>搜索会遍历当前已授权的 Markdown 文档，不访问未授权目录。</p>
+        <h2>已打开的文档</h2>
+        <p>搜索只会覆盖你已打开或授权的 Markdown 文档。</p>
       </section>
     </section>
     <div class="workspace-dim" aria-hidden="true"></div>
@@ -121,6 +121,7 @@ async function handleResultClick(result: SearchResult) {
 
 <style scoped>
 .search-page {
+  --search-drawer-width: min(400px, calc(100vw - var(--rail-width)));
   min-height: 100vh;
   padding-left: var(--rail-width);
   background: var(--color-background);
@@ -130,20 +131,22 @@ async function handleResultClick(result: SearchResult) {
 .search-drawer {
   position: relative;
   z-index: 3;
-  width: min(400px, calc(100vw - var(--rail-width)));
+  width: var(--search-drawer-width);
+  max-width: 100%;
   min-height: 100vh;
   display: grid;
   align-content: start;
   gap: 18px;
-  padding: 28px 28px 96px;
+  padding: 28px 24px 96px;
   background: var(--color-surface-panel);
   border-right: 1px solid var(--color-outline);
   box-shadow: 22px 0 48px color-mix(in srgb, #18181b 10%, transparent);
+  overflow: auto;
 }
 
 .workspace-dim {
   position: fixed;
-  inset: 0 0 0 calc(var(--rail-width) + min(400px, calc(100vw - var(--rail-width))));
+  inset: 0 0 0 calc(var(--rail-width) + var(--search-drawer-width));
   background:
     linear-gradient(color-mix(in srgb, var(--color-background) 76%, #18181b 24%), color-mix(in srgb, var(--color-background) 76%, #18181b 24%)),
     var(--color-background);
@@ -153,7 +156,7 @@ async function handleResultClick(result: SearchResult) {
   position: fixed;
   z-index: 4;
   top: 24px;
-  left: calc(var(--rail-width) + 340px);
+  left: calc(var(--rail-width) + var(--search-drawer-width) - 60px);
   width: 36px;
   height: 36px;
   display: grid;
@@ -183,12 +186,14 @@ header p {
 }
 
 .search-controls {
+  min-width: 0;
   display: grid;
   gap: 12px;
 }
 
 input {
   width: 100%;
+  min-width: 0;
   min-height: 48px;
   padding: 0 16px;
   border: 0;
@@ -199,8 +204,9 @@ input {
 .scope-control {
   display: flex;
   gap: 0;
-  margin-inline: -28px;
-  padding: 0 28px;
+  min-width: 0;
+  margin-inline: 0;
+  padding: 0;
   border-bottom: 1px solid var(--color-outline);
 }
 
@@ -209,8 +215,10 @@ button {
 }
 
 .scope-control button {
+  flex: 1 1 0;
+  min-width: 0;
   min-height: 56px;
-  padding: 0 14px;
+  padding: 0 10px;
   color: var(--color-text);
   background: transparent;
   border-bottom: 3px solid transparent;
@@ -225,6 +233,7 @@ button {
 }
 
 .result-group {
+  min-width: 0;
   display: grid;
   gap: 8px;
   padding-top: 12px;
@@ -232,18 +241,26 @@ button {
 
 .result-group h2,
 .empty-state h2 {
+  min-width: 0;
   margin: 0;
   font-size: 16px;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .result-group p,
 .empty-state p {
+  min-width: 0;
   margin: 0;
   color: var(--color-text-soft);
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .result-item {
+  width: 100%;
+  min-width: 0;
   display: grid;
   gap: 6px;
   padding: 12px;
@@ -252,6 +269,14 @@ button {
   background: transparent;
   border: 0;
   border-radius: 8px;
+}
+
+.result-item strong {
+  min-width: 0;
+  display: block;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  white-space: normal;
 }
 
 .result-item:hover {

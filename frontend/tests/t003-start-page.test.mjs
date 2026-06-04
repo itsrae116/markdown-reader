@@ -23,7 +23,7 @@ for (const token of [
   'router.push',
   '仅支持 .md 或 .markdown 文件',
   '未找到 Markdown 文档',
-  '内容仅在本机浏览器读取和保存'
+  '内容只在本机读取'
 ]) {
   assert.match(startPage, new RegExp(escapeRegExp(token)), `StartPage should contain ${token}`)
 }
@@ -50,7 +50,7 @@ for (const token of [
   'v-html',
   'libraryTree',
   'headings',
-  'Markdown 正文将在这里渲染'
+  '开始阅读、搜索和批注'
 ]) {
   assert.match(workspacePage, new RegExp(escapeRegExp(token)), `WorkspacePage should contain ${token}`)
 }

@@ -5,7 +5,7 @@ export const mockDocuments: DocumentItem[] = [{
   name: '[Mock] 阅读指南.md',
   path: '示例/阅读指南.md',
   type: 'folder_document',
-  content: '# [Mock] Markdown 阅读指南\n\n这是一份用于演示阅读器能力的本地样例文档。\n\n## 本地保存状态\n\n历史、阅读位置和批注仅保存在当前浏览器。',
+  content: '# [Mock] 阅读工作台示例\n\n这是一份用于预览阅读体验的本地样例文档。\n\n## 阅读记录\n\n历史、阅读位置和批注只留在当前浏览器。',
   last_modified: 1780026000000,
   headings: [
     { id: 'heading_1', level: 1, text: '[Mock] Markdown 阅读指南', position: 0 },

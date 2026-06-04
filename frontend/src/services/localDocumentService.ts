@@ -14,6 +14,10 @@ const defaultImage = markdown.renderer.rules.image ?? ((tokens, index, options, 
 const defaultTableOpen = markdown.renderer.rules.table_open ?? ((tokens, index, options, env, self) => self.renderToken(tokens, index, options))
 const defaultTableClose = markdown.renderer.rules.table_close ?? ((tokens, index, options, env, self) => self.renderToken(tokens, index, options))
 
+markdown.renderer.rules.text = (tokens, index) => {
+  return renderTextWithLineBreakTags(tokens[index].content)
+}
+
 markdown.renderer.rules.heading_open = (tokens, index, options, env, self) => {
   const level = Number(tokens[index].tag.replace('h', ''))
   if (level > 3) {
@@ -173,6 +177,18 @@ function createDocumentId(input: string): string {
 
 function normalizeLanguage(info: string): string {
   return info.trim().split(/\s+/)[0]?.toLowerCase() || 'text'
+}
+
+function renderTextWithLineBreakTags(content: string): string {
+  return renderInlineMarkdownCues(
+    markdown.utils.escapeHtml(content).replace(/&lt;br\s*\/?&gt;/gi, '<br>')
+  )
+}
+
+function renderInlineMarkdownCues(html: string): string {
+  return html
+    .replace(/(^|<br>)\s*[-*+]\s+/g, '$1<span class="md-inline-list-marker">•</span>')
+    .replace(/(^|<br>)\s*(\d+)[.)]\s+/g, '$1<span class="md-inline-list-marker">$2.</span>')
 }
 
 function renderCodeBlock(content: string, language: string): string {

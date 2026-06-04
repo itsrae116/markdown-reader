@@ -16,7 +16,10 @@
     "test:t006": "node tests/t006-search.test.mjs",
     "test:t007": "node tests/t007-settings.test.mjs",
     "test:t008": "node tests/t008-polish.test.mjs",
-    "test:t009": "node tests/t009-render-enhancements.test.mjs"
+    "test:t009": "node tests/t009-render-enhancements.test.mjs",
+    "test:t010": "node tests/t010-readable-block-render.test.mjs",
+    "test:t011": "node tests/t011-export.test.mjs",
+    "test:all": "npm run test:scaffold && npm run test:t002 && npm run test:t003 && npm run test:t004 && npm run test:t005 && npm run test:t006 && npm run test:t007 && npm run test:t008 && npm run test:t009 && npm run test:t010 && npm run test:t011"
   },
   "dependencies": {
     "dompurify": "^3.2.5",

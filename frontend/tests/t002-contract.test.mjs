@@ -76,5 +76,10 @@ const preferencesService = readFileSync(join(root, 'src/services/preferencesServ
 assert.match(preferencesService, /font_size/, 'preferences service should use persisted field names')
 assert.match(preferencesService, /reading_width/, 'preferences service should use persisted field names')
 
+const router = readFileSync(join(root, 'src/router/index.ts'), 'utf8')
+assert.match(router, /let isInitialNavigation = true/, 'router should track first navigation')
+assert.match(router, /router\.beforeEach/, 'router should normalize initial app load')
+assert.match(router, /return \{ name: 'start', replace: true \}/, 'initial reload should return to the start page')
+
 const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'))
 assert.equal(packageJson.scripts?.['test:t002'], 'node tests/t002-contract.test.mjs')

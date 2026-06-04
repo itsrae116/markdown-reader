@@ -23,8 +23,8 @@ for (const token of [
   'handlePreferenceChange',
   'confirmClearLocalData',
   'clearLocalData',
-  '二次确认',
-  '仅保存在当前浏览器',
+  '再次点击清除记录',
+  '按你的阅读习惯调整',
   '关闭',
   'RouterLink to="/workspace"'
 ]) {
@@ -34,6 +34,9 @@ for (const token of [
 assert.match(settingsPage, /type="range"/, 'Reading width should use a slider')
 assert.match(settingsPage, /type="number"/, 'Font size should use a numeric control')
 assert.match(settingsPage, /type="checkbox"/, 'Panel visibility should use checkboxes')
+assert.doesNotMatch(settingsPage, /<RouterLink class="icon-button" to="\/search"/, 'Settings topbar should not duplicate search navigation')
+assert.doesNotMatch(settingsPage, /<RouterLink class="icon-button" to="\/workspace"/, 'Settings topbar should not duplicate workspace navigation')
+assert.doesNotMatch(settingsPage, /title="历史"/, 'Settings rail should not expose placeholder history action')
 assert.doesNotMatch(settingsPage, /fetch\(|axios|XMLHttpRequest/i, 'Settings should stay local-only')
 
 for (const token of [
